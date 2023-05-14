@@ -175,9 +175,9 @@ def process_parquet(args, queue, writer, shard, completed_parquets, lower_res, u
         success &= lower_res <= min(width, height) < upper_res
         if success:
             sample = {
-                'punsafe': get_float(x['punsafe']) if 'unsafe' in x.keys() else 1.0,
-                'pwatermark': get_float(x['pwatermark']) if 'watermark' in x.keys() else 1.0,
-                'similarity': get_float(x['similarity']),
+                'punsafe': get_float(x['nsfw_score_opennsfw2']),
+                'pwatermark': get_float(x['watermark_score']),
+                'similarity': get_float(x['clip_similarity_vitl14']),
                 'caption': get_str(x['caption']),
                 'url': get_str(x['url']),
                 'key': get_str(x['key']),
@@ -189,8 +189,7 @@ def process_parquet(args, queue, writer, shard, completed_parquets, lower_res, u
                 'original_height': get_int(x['original_height']),
                 'exif': get_str(x['exif']),
                 'jpg': get_bytes(x['jpg']),
-                'hash': get_int(x['hash']) if 'hash' in x.keys() else -1,
-                'aesthetic_score': get_float(x['AESTHETIC_SCORE']) if 'AESTHETIC_SCORE' in x.keys() else 0.0,
+                'aesthetic_score': get_float(x['aesthetic_score_laion_v2']),
             }
             writer.write(sample)
 
@@ -219,7 +218,6 @@ def convert_and_upload_shards(args: Namespace, queue, lower_res: int, upper_res:
         'original_height': 'int32',
         'exif': 'str',
         'jpg': 'bytes',
-        'hash': 'int64',
         'aesthetic_score': 'float64',
     }
 

@@ -9,12 +9,12 @@ fi
 
 # Use half the CPU cores so cloudwriter can use other half
 img2dataset \
-    --url_list ~/laion2B-en-aesthetic \
+    --url_list ~/laion-art \
     --input_format parquet \
     --url_col URL \
     --caption_col TEXT \
     --output_format parquet \
-    --output_folder /tmp/laion2b-processed \
+    --output_folder /tmp/laion-art-processed \
     --processes_count 32 \
     --thread_count 64 \
     --resize_mode no \
